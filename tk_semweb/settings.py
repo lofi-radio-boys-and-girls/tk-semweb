@@ -21,11 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'es)_p=)1c%#3m6b)epxy8u6g(wadoyqg7@l$m^9e0fax^g)!@e'
-
+PRODUCTION = os.getenv('DATABASE_URL') is not None
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = []
+APP_NAME = os.getenv('APP_NAME', '')
+ALLOWED_HOSTS = [f'{APP_NAME}.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [f'https://{APP_NAME}.up.railway.app']
+if not PRODUCTION:
+    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -37,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'spotify'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,10 +80,21 @@ WSGI_APPLICATION = 'tk_semweb.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+    # uncomment for local development
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+
+    # uncomment for deployment
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': os.getenv('PGDATABASE'),
+    #     'USER': os.getenv('PGUSER'),
+    #     'PASSWORD': os.getenv('PGPASSWORD'),
+    #     'HOST': os.getenv('PGHOST'),
+    #     'PORT': os.getenv('PGPORT'),
+    # }
 }
 
 
@@ -118,3 +135,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Make sure the directories exist to prevent errors when doing `collectstatic`.
+for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
+    directory.mkdir(exist_ok=True)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage' 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
