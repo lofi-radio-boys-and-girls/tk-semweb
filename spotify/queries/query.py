@@ -43,13 +43,14 @@ def get_songs_and_artists():
         list_of_artists.append(result['artistLabel']['value'])
     return {"songs": list_of_songs, "artists": list_of_artists}
 
-def get_song_detail(keyword):
+def get_song_detail(songLabel, artistLabel):
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    keyword = f"\"{keyword}\""
+    songLabel = f"\"{songLabel}\""
+    artistLabel = f"\"{artistLabel}\""
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment ?artistLabel ?albumLabel ?writersLabel
+    SELECT distinct ?songLabel ?comment ?artistLabel (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
         ?song dbo:artist ?artist .
@@ -60,13 +61,12 @@ def get_song_detail(keyword):
 
         ?producers rdfs:label ?producersLabel .
         ?writers rdfs:label ?writersLabel .
-        ?album rdfs:label ?albumLabel .
+        ?album rdfs:label ?albumsLabel .
         ?song rdfs:label ?songLabel .
         ?artist rdfs:label ?artistLabel .
         FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?songLabel), "EN") &&
-        langMatches(lang(?albumLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
-        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + keyword + "@en)}"
-    print(query)
+        langMatches(lang(?albumsLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
+        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)}" 
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()["results"]["bindings"]
@@ -81,11 +81,9 @@ def get_song_detail(keyword):
         list_of_song_labels.append(result['songLabel']['value'])
         list_of_song_comments.append(result['comment']['value'])
         list_of_artist_labels.append(result['artistLabel']['value'])
-        list_of_album_labels.append(result['albumLabel']['value'])
+        list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
     return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist labels": list_of_artist_labels, "album labels": list_of_album_labels, "writer labels": list_of_writer_labels}
 
 # print(get_songs_and_artists())
-# print(get_song_detail("All Dressed Up for School"))
-
-# Problem: Kalo ngasilin 2 entity, bingung milih yang mana secara ini kan milihnya berdasarkan label doang :O
+print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
