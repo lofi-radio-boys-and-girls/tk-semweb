@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from spotify.queries.query import get_songs_and_artists, search_song_or_artist
+from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store
 
 
 def index(request):
@@ -27,8 +28,11 @@ def search(request):
 
 def detail(request):
     context = {
-        'artist': request.GET['artist'],
-        'song': request.GET['song'],
+        'data' : get_song_detail(request.GET['song'],request.GET['artist']),
+        'attr' : check_local_store(request.GET['song'],request.GET['artist'])
     }
-    print(request.GET)
-    return render(request, 'detail.html', context)
+    # print(request.GET['artist'].replace('_ ', '|'))
+    print(context['data'],context['attr'])
+    return render(request, 'detailSong.html', context)
+
+
