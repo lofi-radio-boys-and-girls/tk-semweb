@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 93,
             "patches": [
                 {
                     "date": 1671719275986,
@@ -364,6 +364,22 @@
                 {
                     "date": 1671750220231,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'attr' : check_local_store(request.GET['song'].strip(),request.GET['artist'])\r\n+        'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n     # print(request.GET['artist'].replace('_ ', '|'))\r\n     print(context['data'],context['attr'])\r\n     return render(request, 'detailSong.html', context)\r\n"
+                },
+                {
+                    "date": 1671750812541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n+        'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))\r\n     }\r\n     # print(request.GET['artist'].replace('_ ', '|'))\r\n     print(context['data'],context['attr'])\r\n     return render(request, 'detailSong.html', context)\r\n"
+                },
+                {
+                    "date": 1671751522739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n+        ''\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))\r\n     }\r\n     # print(request.GET['artist'].replace('_ ', '|'))\r\n     print(context['data'],context['attr'])\r\n"
+                },
+                {
+                    "date": 1671751528076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        ''\r\n+        'artist'\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))\r\n     }\r\n     # print(request.GET['artist'].replace('_ ', '|'))\r\n     print(context['data'],context['attr'])\r\n"
+                },
+                {
+                    "date": 1671751534986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'artist'\r\n+        'artist': request.GET['artist'].replace('_ ', '|')\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))\r\n     }\r\n     # print(request.GET['artist'].replace('_ ', '|'))\r\n     print(context['data'],context['attr'])\r\n"
                 }
             ],
             "date": 1671719275986,

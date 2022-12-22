@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 117,
+            "activePatchIndex": 126,
             "patches": [
                 {
                     "date": 1671721438029,
@@ -476,6 +476,42 @@
                 {
                     "date": 1671735664442,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751340006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0.repla}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751348131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0.repla}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0)}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751355238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0)}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751392699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0.replace()}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751398578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0.replace()}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",)}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751406702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",)}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",\",\")}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751453613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",\",\")}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",\", \")}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n@@ -37,9 +37,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Writer</strong>: {{data.writer_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Genre</strong>:\r\n+                        <strong>Genre</strong>: {{}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Release Date</strong>: {{attr.release_dates.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751485315,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0.replace(\"_ \",\", \")}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n@@ -37,9 +37,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Writer</strong>: {{data.writer_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Genre</strong>: {{}}\r\n+                        <strong>Genre</strong>: {{attr.genres.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Release Date</strong>: {{attr.release_dates.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671751569557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{artist}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
                 }
             ],
             "date": 1671721438029,
