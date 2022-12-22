@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 63,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1671719275986,
@@ -260,6 +260,34 @@
                 {
                     "date": 1671732907301,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n \r\n \r\n def detail(request):\r\n     context = {\r\n-        'data' : get_song_detail(request.GET['song'],request.GET['artist'])\r\n+        'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n+        'attr'\r\n     }\r\n     print(context['data'])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n"
+                },
+                {
+                    "date": 1671734213740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'attr'\r\n+        'attr' : check_local_store\r\n     }\r\n     print(context['data'])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n"
+                },
+                {
+                    "date": 1671734223320,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \r\n def detail(request):\r\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'attr' : check_local_store\r\n+        'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n     print(context['data'])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n"
+                },
+                {
+                    "date": 1671734234914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,8 @@\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n-    print(context['data'])\r\n+    print(context['data'], context)\r\n     return render(request, 'detailSong.html', context)\r\n \r\n     \r\n"
+                },
+                {
+                    "date": 1671734240918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,8 @@\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n-    print(context['data'], context)\r\n+    print(context[])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n     \r\n"
+                },
+                {
+                    "date": 1671734338779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.shortcuts import render\r\n \r\n-from spotify.queries.query import get_songs_and_artists, get_song_detail\r\n+from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store\r\n \r\n \r\n def index(request):\r\n     return render(request, 'index.html')\r\n@@ -18,8 +18,8 @@\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n-    print(context[])\r\n+    print(context['attr'])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n     \r\n"
+                },
+                {
+                    "date": 1671734402938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,25 @@\n+from django.shortcuts import render\r\n+\r\n+from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store\r\n+\r\n+\r\n+def index(request):\r\n+    return render(request, 'index.html')\r\n+\r\n+\r\n+def search(request):\r\n+    context = {\r\n+        'keyword': request.GET['keyword'],\r\n+    }\r\n+    return render(request, 'search.html', context)\r\n+\r\n+\r\n+def detail(request):\r\n+    context = {\r\n+        'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n+        'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n+    }\r\n+    print(contextcontext['attr'])\r\n+    return render(request, 'detailSong.html', context)\r\n+\r\n+    \r\n"
+                },
+                {
+                    "date": 1671735214649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,33 +18,8 @@\n     context = {\r\n         'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n         'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n     }\r\n-    print(contextcontext['attr'])\r\n+    # print(context['data'],context['attr'])\r\n     return render(request, 'detailSong.html', context)\r\n \r\n     \r\n-from django.shortcuts import render\r\n-\r\n-from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store\r\n-\r\n-\r\n-def index(request):\r\n-    return render(request, 'index.html')\r\n-\r\n-\r\n-def search(request):\r\n-    context = {\r\n-        'keyword': request.GET['keyword'],\r\n-    }\r\n-    return render(request, 'search.html', context)\r\n-\r\n-\r\n-def detail(request):\r\n-    context = {\r\n-        'data' : get_song_detail(request.GET['song'],request.GET['artist']),\r\n-        'attr' : check_local_store(request.GET['song'],request.GET['artist'])\r\n-    }\r\n-    print(context['attr'])\r\n-    return render(request, 'detailSong.html', context)\r\n-\r\n-    \r\n"
                 }
             ],
             "date": 1671719275986,

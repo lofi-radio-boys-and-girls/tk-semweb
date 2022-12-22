@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 94,
+            "activePatchIndex": 114,
             "patches": [
                 {
                     "date": 1671721438029,
@@ -384,6 +384,86 @@
                 {
                     "date": 1671732473234,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,11 +76,19 @@\n                             </td>\r\n                             <td>\r\n                                 TB - Monthly\r\n                             </td>\r\n-                        </tr>\t\r\n+                        </tr>\r\n                         <tr>\r\n                             <td>\r\n+                                Tempo\r\n+                            </td>\r\n+                            <td>\r\n+                                TB - Monthly\r\n+                            </td>\r\n+                        </tr>\r\n+                        <tr>\r\n+                            <td>\r\n                                 Energy\r\n                             </td>\r\n                             <td>\r\n                                 TB - Monthly\r\n@@ -92,9 +100,10 @@\n                             </td>\r\n                             <td>\r\n                                 TB - Monthly\r\n                             </td>\r\n-                        </tr>\t\t\t\t\r\n+                        </tr>\r\n+                        \t\t\t\t\r\n                     </tbody>\r\n                 </table>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1671734711841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Highest Charting Position</strong>:\r\n+                        <strong>Highest Charting Position</strong>: {{attr.}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Popularity</strong>:\r\n                     </li>\r\n@@ -101,9 +101,16 @@\n                             <td>\r\n                                 TB - Monthly\r\n                             </td>\r\n                         </tr>\r\n-                        \t\t\t\t\r\n+                        <tr>\r\n+                            <td>\r\n+                                Speechiness\r\n+                            </td>\r\n+                            <td>\r\n+                                TB - Monthly\r\n+                            </td>\r\n+                        </tr>\t\t\t\t\r\n                     </tbody>\r\n                 </table>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1671734729027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Highest Charting Position</strong>: {{attr.}}\r\n+                        <strong>Highest Charting Position</strong>: {{attr.charting_positions}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Popularity</strong>:\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671734734767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,12 +18,12 @@\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Highest Charting Position</strong>: {{attr.charting_positions}}\r\n+                        <strong>Highest Charting Position</strong>: {{attr.charting_positions.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Popularity</strong>:\r\n+                        <strong>Popularity</strong>: {{attr.}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Streams</strong>:\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671734740778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Highest Charting Position</strong>: {{attr.charting_positions.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Popularity</strong>: {{attr.}}\r\n+                        <strong>Popularity</strong>: {{attr.pop}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Streams</strong>:\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671734748379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,12 +21,12 @@\n                     <li class=\"list-item\">\r\n                         <strong>Highest Charting Position</strong>: {{attr.charting_positions.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Popularity</strong>: {{attr.pop}}\r\n+                        <strong>Popularity</strong>: {{attr.popularities.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Streams</strong>:\r\n+                        <strong>Streams</strong>: {{}}\r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n"
+                },
+                {
+                    "date": 1671734756167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Popularity</strong>: {{attr.popularities.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Streams</strong>: {{}}\r\n+                        <strong>Streams</strong>: {{attr.streams}}\r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n"
+                },
+                {
+                    "date": 1671734777020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Popularity</strong>: {{attr.popularities.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Streams</strong>: {{attr.streams}}\r\n+                        <strong>Streams</strong>: {{attr.streams.0}}\r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n@@ -40,9 +40,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Genre</strong>:\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Release Date</strong>:\r\n+                        <strong>Release Date</strong>: \r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1671734785349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Genre</strong>:\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Release Date</strong>: \r\n+                        <strong>Release Date</strong>: {{attr.}}\r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1671734796111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Genre</strong>:\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Release Date</strong>: {{attr.}}\r\n+                        <strong>Release Date</strong>: {{attr.release_dates.0}}\r\n                     </li>\r\n                 </ul>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1671734803509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n                             <td>\r\n                                 Chord\r\n                             </td>\r\n                             <td>\r\n-                                TB - Monthly\r\n+                                {{}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734814462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n                             <td>\r\n                                 Chord\r\n                             </td>\r\n                             <td>\r\n-                                {{}}\r\n+                                {{attr.chord_labels.0}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734820332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n                             <td>\r\n                                 Tempo\r\n                             </td>\r\n                             <td>\r\n-                                TB - Monthly\r\n+                                {{attr.}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734828201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n                             <td>\r\n                                 Tempo\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.}}\r\n+                                {{attr.tempos.0}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734835045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n                             <td>\r\n                                 Energy\r\n                             </td>\r\n                             <td>\r\n-                                TB - Monthly\r\n+                                {{attr.}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734844829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,17 +90,17 @@\n                             <td>\r\n                                 Energy\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.}}\r\n+                                {{attr.energies.0}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n                                 Loudness\r\n                             </td>\r\n                             <td>\r\n-                                TB - Monthly\r\n+                                {{attr.}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734850900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,9 +98,9 @@\n                             <td>\r\n                                 Loudness\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.}}\r\n+                                {{attr.Loudness}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671734864533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,17 +98,17 @@\n                             <td>\r\n                                 Loudness\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.Loudness}}\r\n+                                {{attr.loudness.0}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n                                 Speechiness\r\n                             </td>\r\n                             <td>\r\n-                                TB - Monthly\r\n+                                {{attr.Speechiness}}\r\n                             </td>\r\n                         </tr>\t\t\t\t\r\n                     </tbody>\r\n                 </table>\r\n"
+                },
+                {
+                    "date": 1671735046265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     <div class=\"container-fluid m-3\" style=\"padding:13px; margin:auto\">\r\n         <div class=\"row\">\r\n             <div class=\"col-md-4\">\r\n                 <h3 class=\"text-center\">\r\n-                    {{data.songs.0}}\r\n+                    {{attr.songs.0}}\r\n                 </h3>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n@@ -106,9 +106,9 @@\n                             <td>\r\n                                 Speechiness\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.Speechiness}}\r\n+                                {{attr.speechiness.0}}\r\n                             </td>\r\n                         </tr>\t\t\t\t\r\n                     </tbody>\r\n                 </table>\r\n"
+                },
+                {
+                    "date": 1671735156859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     <div class=\"container-fluid m-3\" style=\"padding:13px; margin:auto\">\r\n         <div class=\"row\">\r\n             <div class=\"col-md-4\">\r\n                 <h3 class=\"text-center\">\r\n-                    {{attr.songs.0}}\r\n+                    {{attr.song_label.0}}\r\n                 </h3>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n"
+                },
+                {
+                    "date": 1671735163936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{data.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
                 }
             ],
             "date": 1671721438029,
