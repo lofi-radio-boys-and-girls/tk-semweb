@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from spotify.queries.query import get_songs_and_artists
+from spotify.queries.query import get_songs_and_artists, search_song_or_artist
 
 
 def index(request):
@@ -16,8 +16,10 @@ def search(request):
         data['songs_and_artists'] = zip(songs_and_artists['songs'], songs_and_artists['artists'])
         data['keyword'] = 'Don\'t Know Where to Start? Try Checking These Songs Out!'
     else:
+        result = search_song_or_artist(keyword)
         data = {
-            'keyword': request.GET['keyword']
+            'keyword': keyword,
+            'songs_and_artists': zip(result['songs'], result['artists'])
         }
 
     return render(request, 'search.html', data)
