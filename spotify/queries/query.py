@@ -40,7 +40,8 @@ def get_songs_and_artists():
             ?artist rdfs:label ?artistLabel .
         }
         GROUP BY ?songLabel
-        LIMIT 20
+        ORDER BY ASC (?songLabel)
+        LIMIT 50
         """
     )
     list_of_songs = []
@@ -50,7 +51,6 @@ def get_songs_and_artists():
         list_of_artists.append(result['artistLabel'].toPython())
     return {"songs": list_of_songs, "artists": list_of_artists}
     
-
 def get_song_detail(songLabel, artistLabel):
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
     songLabel = f"\"{songLabel}\""
@@ -103,10 +103,10 @@ def get_song_detail(songLabel, artistLabel):
         list_of_artist_labels.append(result['artistLabel']['value'])
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
-    return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist labels": list_of_artist_labels, "album labels": list_of_album_labels, "writer labels": list_of_writer_labels}
+    return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist_labels": list_of_artist_labels, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels}
 # print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
 
-def check_local_store(keyword):
+def check_local_store(songLabel, artistLabel):
     filename = "static/spotify_dataset.ttl"
     rdfextras.registerplugins()
 
@@ -123,14 +123,56 @@ def check_local_store(keyword):
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-
-        SELECT ?p ?o
+        SELECT distinct ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo (GROUP_CONCAT(DISTINCT ?chordLabel ; separator="; ") AS ?chordLabel) ?speechiness ?releaseDate
         WHERE {
-            ?song :songName "%s" .
-            ?song ?p ?o .
+            ?song :highestChartingPosition ?highestChartingPosition .
+            ?song :popularity ?popularity .
+            ?song :streams ?streams .
+            ?song :hasAttribute ?musicAttributes .
+            ?song :chord ?chord .
+            ?song :releaseDate ?releaseDate .
+            ?song :artist ?artist .
+            ?artist rdfs:label ?artistLabel .
+            ?chord rdfs:label ?chordLabel
+            OPTIONAL {
+            ?musicAttributes :energy ?energy .
+            }
+            OPTIONAL {
+            ?musicAttributes :loudness ?loudness .
+            }
+            OPTIONAL {
+            ?musicAttributes :tempo ?tempo .
+            }
+            OPTIONAL {
+                ?musicAttributes :speechiness ?speechiness .
+            }
+            ?song :songName ?songLabel .
+            FILTER (REGEX(?songLabel, "(?i).*%s.*") && REGEX(?artistLabel, "(?i).*%s.*"))
         }
-        """ % keyword)
+        GROUP BY ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo ?speechiness ?releaseDate
+        """ %(songLabel, artistLabel))
+    list_of_highest_charting_positions = []
+    list_of_popularities = []
+    list_of_streams = []
+    list_of_energies = []
+    list_of_loudness = []
+    list_of_tempos = []
+    list_of_chord_labels = []
+    list_of_speechiness = []
+    list_of_release_dates = []
 
-    return results
-res = check_local_store("Freaks")
-print(get_songs_and_artists())
+    for row in results:
+        list_of_highest_charting_positions.append(row["highestChartingPosition"].toPython())
+        list_of_popularities.append(row["popularity"].toPython())
+        list_of_streams.append(row["streams"].toPython())
+        list_of_energies.append(row["energy"].toPython())
+        list_of_loudness.append(row["loudness"].toPython())
+        list_of_tempos.append(row["tempo"].toPython())
+        list_of_chord_labels.append(row["chordLabel"].toPython())
+        list_of_speechiness.append(row["speechiness"].toPython())
+        list_of_release_dates.append(row["releaseDate"].toPython().strftime("%d %B, %Y"))
+    
+    return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness, "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates}
+res = check_local_store("Hasta Que Dios Diga", "anuel AA")
+print(res)
+# print(get_songs_and_artists())
