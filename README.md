@@ -5,7 +5,7 @@
 - 2006595886 - Sabyna Maharani
 
 ## 🔗 Link Aplikasi 
-TBA
+https://lofi-radio.up.railway.app/
 
 ## 📄 Dataset
 [Spotify Top 200 Charts Dataset](https://www.kaggle.com/datasets/sashankpillai/spotify-top-200-charts-20202021)
