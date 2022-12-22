@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store
+from spotify.queries.query import *
 
 
 def index(request):
@@ -8,10 +8,21 @@ def index(request):
 
 
 def search(request):
-    context = {
-        'keyword': request.GET['keyword'],
-    }
-    return render(request, 'search.html', context)
+    keyword = request.GET['keyword']
+    songs_and_artists = get_songs_and_artists()
+
+    if keyword == '':
+        data = dict()
+        data['songs_and_artists'] = zip(songs_and_artists['songs'], songs_and_artists['artists'])
+        data['keyword'] = 'Don\'t Know Where to Start? Try Checking These Songs Out!'
+    else:
+        result = search_song_or_artist(keyword)
+        data = {
+            'keyword': keyword,
+            'songs_and_artists': zip(result['songs'], result['artists'])
+        }
+
+    return render(request, 'search.html', data)
 
 
 def detail(request):
@@ -23,4 +34,4 @@ def detail(request):
     print(context['data'],context['attr'])
     return render(request, 'detailSong.html', context)
 
-    
+
