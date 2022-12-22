@@ -40,7 +40,7 @@ def get_songs_and_artists():
             ?artist rdfs:label ?artistLabel .
         }
         GROUP BY ?songLabel
-        LIMIT 2
+        LIMIT 20
         """
     )
     list_of_songs = []
