@@ -5,5 +5,5 @@ app_name = 'spotify'
 urlpatterns = [
     path('', views.index, name='index'),
     path('search', views.search, name='search'),
-    path('detail/<song_by_artis>', views.detail, name='detail'),
+    path('detail', views.detail, name='detail'),
 ]

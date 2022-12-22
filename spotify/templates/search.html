@@ -8,37 +8,29 @@
   .btn:hover h5{
     color: #1db954;
   }
-
-
-
 </style>
 {% endblock meta %}
 {% block content %}
 <div class="content-wrapper container">
-
   <div class="page-heading">
+  {% if keyword == 'Don\'t Know Where to Start? Try Checking These Songs Out!' %}
+    <h3>{{keyword}}</h3>
+  {% else %}
     <h3>Result for {{keyword}}</h3>
+  {% endif %}
   </div>
   <div class="page-content">
     <div class="container">
-
-      <a href="detail/{{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
-        <div class="container d-flex justify-content-between text-center">
-          <h5 class="align-middle">Song Title</h5>
-          <p class="align-middle">
-            by Artist
-          </p>
-        </div>
-      </a>
-
-      <a href="detail/{{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
-        <div class="container d-flex justify-content-between text-center">
-          <h5 class="align-middle">Song Title</h5>
-          <p class="align-middle">
-            by Artist
-          </p>
-        </div>
-      </a>
+      {% for song, artist in songs_and_artists %}
+        <a href="detail?artist={{keyword}}&song={{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
+          <div class="container d-flex justify-content-between text-center">
+            <h5 class="align-middle">{{ song }}</h5>
+            <p class="align-middle">
+              by {{ artist }}
+            </p>
+          </div>
+        </a>
+      {% endfor %}
     </div>
 
   </div>
