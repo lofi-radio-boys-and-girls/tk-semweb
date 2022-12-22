@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1671724399201,
@@ -180,6 +180,14 @@
                 {
                     "date": 1671749970403,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -218,9 +218,9 @@\n     \r\n     return {\"charting_positions\": list_of_highest_charting_positions, \"popularities\": list_of_popularities, \"streams\": list_of_streams, \"energies\": list_of_energies, \"loudness\": list_of_loudness,\r\n     \"tempos\": list_of_tempos, \"chord_labels\": list_of_chord_labels, \"speechiness\": list_of_speechiness, \"release_dates\": list_of_release_dates, \"song_labels\":list_of_song_labels,\r\n     \"artist_labels\":list_of_artist_labels, \"genres\":list_of_genres}\r\n-res = check_local_store(\"0X1=LOVESONG (I Know I Love you)\", \"Seori|TOMORROWXTOGETHER\")\r\n+res = check_local_store(\"0X1=LOVESONG (I Know I Love you)\", \"Seori\")\r\n print(res)\r\n # print(get_songs_and_artists())\r\n # result = search_song_or_artist(\"anue\")\r\n # for row in result:\r\n"
+                },
+                {
+                    "date": 1671752499570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -218,10 +218,10 @@\n     \r\n     return {\"charting_positions\": list_of_highest_charting_positions, \"popularities\": list_of_popularities, \"streams\": list_of_streams, \"energies\": list_of_energies, \"loudness\": list_of_loudness,\r\n     \"tempos\": list_of_tempos, \"chord_labels\": list_of_chord_labels, \"speechiness\": list_of_speechiness, \"release_dates\": list_of_release_dates, \"song_labels\":list_of_song_labels,\r\n     \"artist_labels\":list_of_artist_labels, \"genres\":list_of_genres}\r\n-res = check_local_store(\"0X1=LOVESONG (I Know I Love you)\", \"Seori\")\r\n-print(res)\r\n+res = check_local_store(\"Hasta Que Dios Diga\", \"Bad Bunny\")\r\n+# print(res)\r\n # print(get_songs_and_artists())\r\n # result = search_song_or_artist(\"anue\")\r\n # for row in result:\r\n #     print(row)\r\n"
+                },
+                {
+                    "date": 1671753044825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -219,9 +219,9 @@\n     return {\"charting_positions\": list_of_highest_charting_positions, \"popularities\": list_of_popularities, \"streams\": list_of_streams, \"energies\": list_of_energies, \"loudness\": list_of_loudness,\r\n     \"tempos\": list_of_tempos, \"chord_labels\": list_of_chord_labels, \"speechiness\": list_of_speechiness, \"release_dates\": list_of_release_dates, \"song_labels\":list_of_song_labels,\r\n     \"artist_labels\":list_of_artist_labels, \"genres\":list_of_genres}\r\n res = check_local_store(\"Hasta Que Dios Diga\", \"Bad Bunny\")\r\n-# print(res)\r\n+print(res)\r\n # print(get_songs_and_artists())\r\n # result = search_song_or_artist(\"anue\")\r\n # for row in result:\r\n #     print(row)\r\n"
                 }
             ],
             "date": 1671724399201,

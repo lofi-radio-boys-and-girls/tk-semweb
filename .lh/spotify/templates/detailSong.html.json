@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 126,
+            "activePatchIndex": 127,
             "patches": [
                 {
                     "date": 1671721438029,
@@ -512,6 +512,10 @@
                 {
                     "date": 1671751569557,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{artist}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671752994991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n                             <td>\r\n                                 Chord\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.chord_labels.0}}\r\n+                                {{chord}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
                 }
             ],
             "date": 1671721438029,
