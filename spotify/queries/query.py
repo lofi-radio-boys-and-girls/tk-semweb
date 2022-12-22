@@ -219,7 +219,7 @@ def check_local_store(songLabel, artistLabel):
     return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness,
     "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_labels":list_of_song_labels,
     "artist_labels":list_of_artist_labels, "genres":list_of_genres}
-res = check_local_store("0X1=LOVESONG (I Know I Love you)", "Seori")
+res = check_local_store("Hasta Que Dios Diga", "Bad Bunny")
 print(res)
 # print(get_songs_and_artists())
 # result = search_song_or_artist("anue")
