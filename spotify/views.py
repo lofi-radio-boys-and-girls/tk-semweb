@@ -19,7 +19,8 @@ def detail(request):
         'data' : get_song_detail(request.GET['song'],request.GET['artist']),
         'attr' : check_local_store(request.GET['song'],request.GET['artist'])
     }
-    # print(context['data'],context['attr'])
+    # print(request.GET['artist'].replace('_ ', '|'))
+    print(context['data'],context['attr'])
     return render(request, 'detailSong.html', context)
 
     

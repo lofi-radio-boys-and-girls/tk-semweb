@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 114,
+            "activePatchIndex": 117,
             "patches": [
                 {
                     "date": 1671721438029,
@@ -464,6 +464,18 @@
                 {
                     "date": 1671735163936,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{data.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671735515545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labela.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671735628144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,15 +6,15 @@\n     <div class=\"container-fluid m-3\" style=\"padding:13px; margin:auto\">\r\n         <div class=\"row\">\r\n             <div class=\"col-md-4\">\r\n                 <h3 class=\"text-center\">\r\n-                    {{attr.song_label.0}}\r\n+                    {{attr.song_labels.0}}\r\n                 </h3>\r\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labela.0}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671735664442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Artist</strong>: {{attr.artist_labels}}\r\n+                        <strong>Artist</strong>: {{attr.artist_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Album</strong>: {{data.album_labels.0}}\r\n                     </li>\r\n"
                 }
             ],
             "date": 1671721438029,

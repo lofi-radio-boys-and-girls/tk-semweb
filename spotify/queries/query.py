@@ -16,6 +16,43 @@ prefix_dict = {
     "dbc": "http://dbpedia.org/page/Category:",
 }
 
+def search_song_or_artist(keyword):
+    filename = "static/spotify_dataset.ttl"
+    rdfextras.registerplugins()
+
+    local_graph = rdflib.Graph()
+    local_graph.parse(filename, format='n3')
+
+    # TODO: Handle regex query
+    results = local_graph.query("""
+        prefix : <http://lofiradioboysandgirls.up.railway.app/data/>
+        prefix owl: <http://www.w3.org/2002/07/owl#>
+        prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix xml: <http://www.w3.org/XML/1998/namespace>
+        prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+        prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        prefix vcard: <http://www.w3.org/2006/vcard/ns#>
+        base <http://www.w3.org/2002/07/owl#>
+
+        SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel)
+        WHERE {
+            ?song :artist ?artist .
+            ?song :songName ?songLabel .
+            ?artist rdfs:label ?artistLabel .
+
+            FILTER(CONTAINS(LCASE(?songLabel), "%s") || REGEX(?songLabel, "(?i).*%s.*") || CONTAINS(LCASE(?artistLabel), "%s") || REGEX(?artistLabel, "(?i).*%s.*"))
+            }
+        GROUP BY ?songLabel
+        ORDER BY ASC (?songLabel)
+        """ % (keyword, keyword, keyword, keyword)
+    )
+    list_of_songs = []
+    list_of_artists = []
+    for result in results:
+        list_of_songs.append(result['songLabel'].toPython())
+        list_of_artists.append(result['artistLabel'].toPython())
+    return {"songs": list_of_songs, "artists": list_of_artists}
+
 def get_songs_and_artists():
     filename = "static/spotify_dataset.ttl"
     rdfextras.registerplugins()
@@ -33,7 +70,7 @@ def get_songs_and_artists():
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-         SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel)
+         SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel)
         WHERE {
             ?song :artist ?artist .
             ?song :songName ?songLabel .
@@ -58,7 +95,7 @@ def get_song_detail(songLabel, artistLabel):
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="; ") AS ?writersLabel)
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="_ ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="_ ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
         ?song rdfs:label ?songLabel .
@@ -104,7 +141,6 @@ def get_song_detail(songLabel, artistLabel):
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
     return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist_labels": list_of_artist_labels, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels}
-# print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
 
 def check_local_store(songLabel, artistLabel):
     filename = "static/spotify_dataset.ttl"
@@ -123,7 +159,7 @@ def check_local_store(songLabel, artistLabel):
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-        SELECT distinct ?songLabel ?artistLabel ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo (GROUP_CONCAT(DISTINCT ?chordLabel ; separator="; ") AS ?chordLabel) ?speechiness ?releaseDate
+        SELECT distinct (GROUP_CONCAT(DISTINCT ?genreLabel ; separator="; ") AS ?genreLabel) ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel) ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo (GROUP_CONCAT(DISTINCT ?chordLabel ; separator="_ ") AS ?chordLabel) ?speechiness ?releaseDate
         WHERE {
             ?song :highestChartingPosition ?highestChartingPosition .
             ?song :popularity ?popularity .
@@ -132,6 +168,8 @@ def check_local_store(songLabel, artistLabel):
             ?song :chord ?chord .
             ?song :releaseDate ?releaseDate .
             ?song :artist ?artist .
+            ?song :genre ?genre .
+            ?genre rdfs:label ?genreLabel .
             ?artist rdfs:label ?artistLabel .
             ?chord rdfs:label ?chordLabel
             OPTIONAL {
@@ -149,7 +187,7 @@ def check_local_store(songLabel, artistLabel):
             ?song :songName ?songLabel .
             FILTER (REGEX(?songLabel, "(?i).*%s.*") && REGEX(?artistLabel, "(?i).*%s.*"))
         }
-        GROUP BY ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo ?speechiness ?releaseDate
+        GROUP BY ?songLabel ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo ?speechiness ?releaseDate
         """ %(songLabel, artistLabel))
     list_of_highest_charting_positions = []
     list_of_popularities = []
@@ -162,6 +200,7 @@ def check_local_store(songLabel, artistLabel):
     list_of_release_dates = []
     list_of_song_labels = []
     list_of_artist_labels = []
+    list_of_genres = []
 
     for row in results:
         list_of_highest_charting_positions.append(row["highestChartingPosition"].toPython())
@@ -175,9 +214,14 @@ def check_local_store(songLabel, artistLabel):
         list_of_release_dates.append(row["releaseDate"].toPython().strftime("%d %B, %Y"))
         list_of_song_labels.append(row["songLabel"].toPython())
         list_of_artist_labels.append(row["artistLabel"].toPython())
+        list_of_genres.append(row["genreLabel"].toPython())
     
-    return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness, "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_label":list_of_song_labels, "artist_label":list_of_artist_labels}
-
-res = check_local_store("Hasta Que Dios Diga", "anuel AA")
+    return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness,
+    "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_labels":list_of_song_labels,
+    "artist_labels":list_of_artist_labels, "genres":list_of_genres}
+res = check_local_store("0X1=LOVESONG (I Know I Love you)", "Seori")
 print(res)
 # print(get_songs_and_artists())
+# result = search_song_or_artist("anue")
+# for row in result:
+#     print(row)
