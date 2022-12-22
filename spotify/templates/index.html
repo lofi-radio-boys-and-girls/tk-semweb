@@ -8,26 +8,24 @@
     <h3>Search Spotify Top 200 Songs</h3>
   </div>
   <div class="page-content">
-    <div class="input-group mb-3">
+    <form action="{% url 'spotify:search' %}" method="get">
+      <div class="input-group mb-3">
       <span
         class="input-group-text"
         id="basic-addon1"
       ><i class="bi-2x bi-search"></i></span>
       <input
-        type="text"
-        class="form-control"
-        placeholder="Search Spotify Top 200 Songs"
-        aria-label="Search Spotify Top 200 Songs"
         aria-describedby="button-addon2"
+        aria-label="Search Spotify Top 200 Songs"
+        class="form-control"
+        id="keyword"
+        placeholder="Search Spotify Top 200 Songs"
+        type="text"
+        name="keyword"
       />
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        id="button-addon2"
-      >
-        Search
-      </button>
+        <input type="submit" class="btn btn-outline-secondary" value="Search">
     </div>
+    </form>
   </div>
 
 </div>

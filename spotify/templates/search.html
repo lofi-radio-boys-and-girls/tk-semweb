@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<style>
+  h5{
+    color: #121212;
+  }
+  .btn:hover h5{
+    color: #1db954;
+  }
+
+
+
+</style>
+{% endblock meta %}
+{% block content %}
+<div class="content-wrapper container">
+
+  <div class="page-heading">
+    <h3>Result for {{keyword}}</h3>
+  </div>
+  <div class="page-content">
+    <div class="container">
+
+      <a href="detail/{{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
+        <div class="container d-flex justify-content-between text-center">
+          <h5 class="align-middle">Song Title</h5>
+          <p class="align-middle">
+            by Artist
+          </p>
+        </div>
+      </a>
+
+      <a href="detail/{{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
+        <div class="container d-flex justify-content-between text-center">
+          <h5 class="align-middle">Song Title</h5>
+          <p class="align-middle">
+            by Artist
+          </p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock content %}
