@@ -50,9 +50,10 @@ def get_song_detail(songLabel, artistLabel):
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment ?artistLabel (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
+        ?song rdfs:label ?songLabel .
 
         OPTIONAL {
         ?song dbo:artist ?artist .
@@ -73,13 +74,8 @@ def get_song_detail(songLabel, artistLabel):
             ?writers rdfs:label ?writersLabel .
         }
         
-        
         ?song dbo:producer ?producers .
         ?producers rdfs:label ?producersLabel .
-        
-        
-        ?song rdfs:label ?songLabel .
-        
         FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?songLabel), "EN") &&
         langMatches(lang(?albumsLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
         langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)}" 
@@ -100,40 +96,4 @@ def get_song_detail(songLabel, artistLabel):
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
     return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist labels": list_of_artist_labels, "album labels": list_of_album_labels, "writer labels": list_of_writer_labels}
-
-def get_artist_detail(artistLabel):
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    sparql.setQuery("""
-    PREFIX dbo: <http://dbpedia.org/ontology/>
-    PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?artistLabel ?comment ?wikipageID ?birthPlace ?songsLabel
-    WHERE {
-        ?artist a dbo:artist .
-        ?artist rdfs:comment ?comment .
-        ?artist dbo:wikiPageID ?wikipageID .
-        ?artist dbo:birthPlace ?birthPlace .
-        ?songs dbo:artist ?artist .
-        ?songs rdfs:label ?songsLabel .
-        ?artist rdfs:label ?artistLabel .
-
-        FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?comment), "EN") && langMatches(lang(?birthPlace), "EN") 
-        && langMatches(lang(?songsLabel), "EN")
-        && ?artistLabel = """ + artistLabel + "@en)}"
-    )
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()["results"]["bindings"]
-    list_of_artist_comments = []
-    list_of_wikipage_ids = []
-    list_of_birth_places = []
-    list_of_songs_labels = []
-
-    for result in results:
-        list_of_songs_labels.append(result['songLabel']['value'])
-        list_of_artist_comments.append(result['comment']['value'])
-        list_of_wikipage_ids.append(result['wikipageID']['value'])
-        list_of_birth_places.append(result['birthPlace']['value'])
-    return {"songs": list_of_songs_labels, "comments": list_of_artist_comments, "wikipage ids": list_of_wikipage_ids, "birth places": list_of_birth_places}
-
-# print(get_songs_and_artists())
 # print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
-print(get_artist_detail("Daughtry (band)"))
