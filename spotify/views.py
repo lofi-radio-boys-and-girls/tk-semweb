@@ -8,14 +8,25 @@ def index(request):
 
 
 def search(request):
-    context = {
-        'keyword': request.GET['keyword'],
-    }
-    return render(request, 'search.html', context)
+    keyword = request.GET['keyword']
+    songs_and_artists = get_songs_and_artists()
+
+    if keyword == '':
+        data = dict()
+        data['songs_and_artists'] = zip(songs_and_artists['songs'], songs_and_artists['artists'])
+        data['keyword'] = 'Don\'t Know Where to Start? Try Checking These Songs Out!'
+    else:
+        data = {
+            'keyword': request.GET['keyword']
+        }
+
+    return render(request, 'search.html', data)
 
 
-def detail(request, song_by_artis):
+def detail(request):
     context = {
-        'keyword': song_by_artis,
+        'artist': request.GET['artist'],
+        'song': request.GET['song'],
     }
+    print(request.GET)
     return render(request, 'detail.html', context)
