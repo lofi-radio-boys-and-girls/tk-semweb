@@ -34,7 +34,7 @@ def search_song_or_artist(keyword):
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
 
-        SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel)
+        SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel)
         WHERE {
             ?song :artist ?artist .
             ?song :songName ?songLabel .
@@ -70,7 +70,7 @@ def get_songs_and_artists():
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-         SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel)
+         SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel)
         WHERE {
             ?song :artist ?artist .
             ?song :songName ?songLabel .
@@ -95,7 +95,7 @@ def get_song_detail(songLabel, artistLabel):
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="; ") AS ?writersLabel)
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="_ ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="_ ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
         ?song rdfs:label ?songLabel .
@@ -159,7 +159,7 @@ def check_local_store(songLabel, artistLabel):
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-        SELECT distinct (GROUP_CONCAT(DISTINCT ?genreLabel ; separator="; ") AS ?genreLabel) ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel) ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo (GROUP_CONCAT(DISTINCT ?chordLabel ; separator="; ") AS ?chordLabel) ?speechiness ?releaseDate
+        SELECT distinct (GROUP_CONCAT(DISTINCT ?genreLabel ; separator="; ") AS ?genreLabel) ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel) ?highestChartingPosition ?popularity ?streams ?energy ?loudness ?tempo (GROUP_CONCAT(DISTINCT ?chordLabel ; separator="_ ") AS ?chordLabel) ?speechiness ?releaseDate
         WHERE {
             ?song :highestChartingPosition ?highestChartingPosition .
             ?song :popularity ?popularity .
@@ -219,9 +219,9 @@ def check_local_store(songLabel, artistLabel):
     return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness,
     "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_labels":list_of_song_labels,
     "artist_labels":list_of_artist_labels, "genres":list_of_genres}
-res = check_local_store("Hasta Que Dios Diga", "Anuel AA|Bad Bunny")
-# print(res)
+res = check_local_store("Hasta Que Dios Diga", "Bad Bunny")
+print(res)
 # print(get_songs_and_artists())
-result = search_song_or_artist("anue")
-for row in result:
-    print(row)
+# result = search_song_or_artist("anue")
+# for row in result:
+#     print(row)
