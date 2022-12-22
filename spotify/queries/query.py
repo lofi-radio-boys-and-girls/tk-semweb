@@ -33,20 +33,21 @@ def get_songs_and_artists():
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         prefix vcard: <http://www.w3.org/2006/vcard/ns#>
         base <http://www.w3.org/2002/07/owl#>
-         SELECT distinct ?songLabel ?artistLabel
+         SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel)
         WHERE {
             ?song :artist ?artist .
             ?song :songName ?songLabel .
             ?artist rdfs:label ?artistLabel .
         }
+        GROUP BY ?songLabel
         LIMIT 20
         """
     )
     list_of_songs = []
     list_of_artists = []
     for result in results:
-        list_of_songs.append(result[0].toPython())
-        list_of_artists.append(result[1].toPython())
+        list_of_songs.append(result['songLabel'].toPython())
+        list_of_artists.append(result['artistLabel'].toPython())
     return {"songs": list_of_songs, "artists": list_of_artists}
     
 
@@ -57,7 +58,7 @@ def get_song_detail(songLabel, artistLabel):
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="; ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
         ?song rdfs:label ?songLabel .
@@ -85,7 +86,7 @@ def get_song_detail(songLabel, artistLabel):
         ?producers rdfs:label ?producersLabel .
         FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?songLabel), "EN") &&
         langMatches(lang(?albumsLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
-        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)}" 
+        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)} GROUP BY ?songLabel ?comment"
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()["results"]["bindings"]
@@ -132,3 +133,4 @@ def check_local_store(keyword):
 
     return results
 res = check_local_store("Freaks")
+print(get_songs_and_artists())
