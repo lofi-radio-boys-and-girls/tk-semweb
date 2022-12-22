@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper container">
+    <div class="container-fluid m-3" style="padding:13px; margin:auto">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="text-center">
+                    {{data.songs.0}}
+                </h3>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li class="list-item">
+                        <strong>Artist</strong>: {{data.artist_labels.0}}
+                    </li>
+                    <li class="list-item">
+                        <strong>Album</strong>: {{data.album_labels.0}}
+                    </li>
+                    <li class="list-item">
+                        <strong>Highest Charting Position</strong>:
+                    </li>
+                    <li class="list-item">
+                        <strong>Popularity</strong>:
+                    </li>
+                    <li class="list-item">
+                        <strong>Streams</strong>:
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li class="list-item">
+                        <strong>Producer</strong>:
+                    </li>
+                    <li class="list-item">
+                        <strong>Writer</strong>: {{data.writer_labels.0}}
+                    </li>
+                    <li class="list-item">
+                        <strong>Genre</strong>:
+                    </li>
+                    <li class="list-item">
+                        <strong>Release Date</strong>:
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{data.comments.0}}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    Music Attributes
+                </h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <strong>Attributes</strong>
+                            </th>
+                            <th>
+                                <strong>Value</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Chord
+                            </td>
+                            <td>
+                                TB - Monthly
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Tempo
+                            </td>
+                            <td>
+                                TB - Monthly
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Energy
+                            </td>
+                            <td>
+                                TB - Monthly
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Loudness
+                            </td>
+                            <td>
+                                TB - Monthly
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Speechiness
+                            </td>
+                            <td>
+                                TB - Monthly
+                            </td>
+                        </tr>				
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

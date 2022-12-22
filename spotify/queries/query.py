@@ -83,7 +83,7 @@ def get_song_detail(songLabel, artistLabel):
         list_of_artist_labels.append(result['artistLabel']['value'])
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
-    return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist labels": list_of_artist_labels, "album labels": list_of_album_labels, "writer labels": list_of_writer_labels}
+    return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist_labels": list_of_artist_labels, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels}
 
 # print(get_songs_and_artists())
 print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))

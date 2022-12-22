@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from spotify.queries.query import get_songs_and_artists
+from spotify.queries.query import get_songs_and_artists, get_song_detail
 
 
 def index(request):
@@ -14,8 +14,12 @@ def search(request):
     return render(request, 'search.html', context)
 
 
-def detail(request, song_by_artis):
+def detail(request):
     context = {
-        'keyword': song_by_artis,
+        'data' : get_song_detail(request.GET['song'],request.GET['artist']),
+        'attr' : ...
     }
-    return render(request, 'detail.html', context)
+    print(context['data'])
+    return render(request, 'detailSong.html', context)
+
+    
