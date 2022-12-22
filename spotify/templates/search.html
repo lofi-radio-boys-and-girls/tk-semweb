@@ -22,7 +22,7 @@
   <div class="page-content">
     <div class="container">
       {% for song, artist in songs_and_artists %}
-        <a href="detail?artist={{keyword}}&song={{keyword}}" class="btn btn-primary rounded-pill btn-block m-2">
+        <a href="detail?artist={{artist}}&song={{song}}" class="btn btn-primary rounded-pill btn-block m-2">
           <div class="container d-flex justify-content-between text-center">
             <h5 class="align-middle">{{ song }}</h5>
             <p class="align-middle">
