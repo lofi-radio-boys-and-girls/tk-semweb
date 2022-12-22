@@ -16,6 +16,43 @@ prefix_dict = {
     "dbc": "http://dbpedia.org/page/Category:",
 }
 
+def search_song_or_artist(keyword):
+    filename = "static/spotify_dataset.ttl"
+    rdfextras.registerplugins()
+
+    local_graph = rdflib.Graph()
+    local_graph.parse(filename, format='n3')
+
+    # TODO: Handle regex query
+    results = local_graph.query("""
+        prefix : <http://lofiradioboysandgirls.up.railway.app/data/>
+        prefix owl: <http://www.w3.org/2002/07/owl#>
+        prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix xml: <http://www.w3.org/XML/1998/namespace>
+        prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+        prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        prefix vcard: <http://www.w3.org/2006/vcard/ns#>
+        base <http://www.w3.org/2002/07/owl#>
+
+        SELECT distinct ?songLabel (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="; ") AS ?artistLabel)
+        WHERE {
+            ?song :artist ?artist .
+            ?song :songName ?songLabel .
+            ?artist rdfs:label ?artistLabel .
+
+            FILTER(CONTAINS(LCASE(?songLabel), "%s") || REGEX(?songLabel, "(?i).*%s.*") || CONTAINS(LCASE(?artistLabel), "%s") || REGEX(?artistLabel, "(?i).*%s.*"))
+            }
+        GROUP BY ?songLabel
+        ORDER BY ASC (?songLabel)
+        """ % (keyword, keyword, keyword, keyword)
+    )
+    list_of_songs = []
+    list_of_artists = []
+    for result in results:
+        list_of_songs.append(result['songLabel'].toPython())
+        list_of_artists.append(result['artistLabel'].toPython())
+    return {"songs": list_of_songs, "artists": list_of_artists}
+
 def get_songs_and_artists():
     filename = "static/spotify_dataset.ttl"
     rdfextras.registerplugins()
@@ -104,7 +141,6 @@ def get_song_detail(songLabel, artistLabel):
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
     return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist_labels": list_of_artist_labels, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels}
-# print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
 
 def check_local_store(songLabel, artistLabel):
     filename = "static/spotify_dataset.ttl"
@@ -184,5 +220,8 @@ def check_local_store(songLabel, artistLabel):
     "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_labels":list_of_song_labels,
     "artist_labels":list_of_artist_labels, "genres":list_of_genres}
 res = check_local_store("Hasta Que Dios Diga", "Anuel AA|Bad Bunny")
-print(res)
+# print(res)
 # print(get_songs_and_artists())
+result = search_song_or_artist("anue")
+for row in result:
+    print(row)
