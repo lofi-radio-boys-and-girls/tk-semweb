@@ -50,20 +50,32 @@ def get_song_detail(songLabel, artistLabel):
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment ?artistLabel (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(?artistLabel ; separator="; ") AS ?artistLabel) (GROUP_CONCAT(?albumsLabel ; separator="; ") AS ?albumsLabel) (GROUP_CONCAT(?writersLabel ; separator="; ") AS ?writersLabel)
     WHERE {
         ?song a dbo:Song .
-        ?song dbo:artist ?artist .
-        ?song rdfs:comment ?comment .
-        ?song dbp:album ?album .
-        ?song dbp:writer ?writers .
-        ?song dbo:producer ?producers .
-
-        ?producers rdfs:label ?producersLabel .
-        ?writers rdfs:label ?writersLabel .
-        ?album rdfs:label ?albumsLabel .
         ?song rdfs:label ?songLabel .
+
+        OPTIONAL {
+        ?song dbo:artist ?artist .
         ?artist rdfs:label ?artistLabel .
+        }
+
+        OPTIONAL {
+            ?song rdfs:comment ?comment .
+        }
+        
+        OPTIONAL {
+            ?song dbp:album ?album .
+            ?album rdfs:label ?albumsLabel .
+        }
+
+        OPTIONAL {
+            ?song dbp:writer ?writers .
+            ?writers rdfs:label ?writersLabel .
+        }
+        
+        ?song dbo:producer ?producers .
+        ?producers rdfs:label ?producersLabel .
         FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?songLabel), "EN") &&
         langMatches(lang(?albumsLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
         langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)}" 
@@ -84,6 +96,4 @@ def get_song_detail(songLabel, artistLabel):
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
     return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist labels": list_of_artist_labels, "album labels": list_of_album_labels, "writer labels": list_of_writer_labels}
-
-# print(get_songs_and_artists())
-print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
+# print(get_song_detail("What About Now (Daughtry song)", "Daughtry (band)"))
