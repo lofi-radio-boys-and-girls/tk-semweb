@@ -28,6 +28,7 @@ def search(request):
 def detail(request):
     context = {
         'data' : get_song_detail(request.GET['song'],request.GET['artist']),
+        'artist': request.GET['artist'].replace('_ ', ', '),
         'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))
     }
     # print(request.GET['artist'].replace('_ ', '|'))
