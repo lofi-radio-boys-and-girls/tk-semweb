@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-from spotify.queries.query import get_songs_and_artists, search_song_or_artist
-from spotify.queries.query import get_songs_and_artists, get_song_detail, check_local_store
+from spotify.queries.query import *
 
 
 def index(request):
