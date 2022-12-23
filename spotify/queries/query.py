@@ -90,12 +90,11 @@ def get_songs_and_artists():
     
 def get_song_detail(songLabel, artistLabel):
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    songLabel = f"\"{songLabel}\""
-    artistLabel = f"\"{artistLabel}\""
     query = """
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
-    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?artistLabel ; separator="_ ") AS ?artistLabel) (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="_ ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="_ ") AS ?writersLabel)
+
+    SELECT distinct ?songLabel ?comment (GROUP_CONCAT(DISTINCT ?albumsLabel ; separator="_ ") AS ?albumsLabel) (GROUP_CONCAT(DISTINCT ?writersLabel ; separator="_ ") AS ?writersLabel) (GROUP_CONCAT(DISTINCT ?producersLabel ; separator="_ ") AS ?producersLabel)
     WHERE {
         ?song a dbo:Song .
         ?song rdfs:label ?songLabel .
@@ -121,26 +120,30 @@ def get_song_detail(songLabel, artistLabel):
         
         ?song dbo:producer ?producers .
         ?producers rdfs:label ?producersLabel .
+
         FILTER (langMatches(lang(?artistLabel), "EN") && langMatches(lang(?songLabel), "EN") &&
         langMatches(lang(?albumsLabel), "EN") && langMatches(lang(?writersLabel), "EN") &&
-        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && ?songLabel = """ + songLabel + "@en" + "&& ?artistLabel = " + artistLabel + "@en)} GROUP BY ?songLabel ?comment"
+        langMatches(lang(?producersLabel), "EN") && langMatches(lang(?comment), "EN") && 
+        (CONTAINS(LCASE(?songLabel), "%s") || REGEX(?songLabel, "(?i).*%s.*")) && (CONTAINS(LCASE(?artistLabel), "%s") || REGEX(?artistLabel, "(?i).*%s.*")))
+        }
+        GROUP BY ?songLabel ?comment
+        """ % (songLabel, songLabel, artistLabel, artistLabel)
+    print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()["results"]["bindings"]
 
-    list_of_song_labels = []
     list_of_song_comments = []
-    list_of_artist_labels = []
     list_of_album_labels = []
     list_of_writer_labels = []
+    list_of_producer_labels = []
 
     for result in results:
-        list_of_song_labels.append(result['songLabel']['value'])
         list_of_song_comments.append(result['comment']['value'])
-        list_of_artist_labels.append(result['artistLabel']['value'])
         list_of_album_labels.append(result['albumsLabel']['value'])
         list_of_writer_labels.append(result['writersLabel']['value'])
-    return {"songs": list_of_song_labels, "comments": list_of_song_comments, "artist_labels": list_of_artist_labels, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels}
+        list_of_producer_labels.append(result['producersLabel']['value'])
+    return {"comments": list_of_song_comments, "album_labels": list_of_album_labels, "writer_labels": list_of_writer_labels, "producer_labels": list_of_producer_labels}
 
 def check_local_store(songLabel, artistLabel):
     filename = "static/spotify_dataset.ttl"
@@ -216,11 +219,17 @@ def check_local_store(songLabel, artistLabel):
         list_of_artist_labels.append(row["artistLabel"].toPython())
         list_of_genres.append(row["genreLabel"].toPython())
     
-    return {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness,
+    dbpedia_result = get_song_detail(songLabel, artistLabel)
+    dict_result = {"charting_positions": list_of_highest_charting_positions, "popularities": list_of_popularities, "streams": list_of_streams, "energies": list_of_energies, "loudness": list_of_loudness,
     "tempos": list_of_tempos, "chord_labels": list_of_chord_labels, "speechiness": list_of_speechiness, "release_dates": list_of_release_dates, "song_labels":list_of_song_labels,
     "artist_labels":list_of_artist_labels, "genres":list_of_genres}
-res = check_local_store("Hasta Que Dios Diga", "Bad Bunny")
-print(res)
+    dict_result.update(dbpedia_result)
+
+    return dict_result
+# res = check_local_store("Hasta Que Dios Diga", "Bad Bunny")
+# result = get_song_detail("alive and Living", "The Golden Palominos")
+# print(result)
+# print(res)
 # print(get_songs_and_artists())
 # result = search_song_or_artist("anue")
 # for row in result:
