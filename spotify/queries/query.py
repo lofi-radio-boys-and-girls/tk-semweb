@@ -174,7 +174,9 @@ def check_local_store(songLabel, artistLabel):
             ?song :genre ?genre .
             ?genre rdfs:label ?genreLabel .
             ?artist rdfs:label ?artistLabel .
-            ?chord rdfs:label ?chordLabel
+            OPTIONAL {
+            ?chord rdfs:label ?chordLabel .
+            }
             OPTIONAL {
             ?musicAttributes :energy ?energy .
             }
