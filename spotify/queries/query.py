@@ -128,7 +128,6 @@ def get_song_detail(songLabel, artistLabel):
         }
         GROUP BY ?songLabel ?comment
         """ % (songLabel, songLabel, artistLabel, artistLabel)
-    print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()["results"]["bindings"]
@@ -228,11 +227,3 @@ def check_local_store(songLabel, artistLabel):
     dict_result.update(dbpedia_result)
 
     return dict_result
-# res = check_local_store("Hasta Que Dios Diga", "Bad Bunny")
-# result = get_song_detail("alive and Living", "The Golden Palominos")
-# print(result)
-# print(res)
-# print(get_songs_and_artists())
-# result = search_song_or_artist("anue")
-# for row in result:
-#     print(row)
