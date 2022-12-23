@@ -22,6 +22,9 @@ def search(request):
             'songs_and_artists': zip(result['songs'], result['artists'])
         }
 
+        if len(result['songs']) == 0:
+            data['message'] = "Your favorite song or artist still got a long way to reach the top, try other ones!"
+
     return render(request, 'search.html', data)
 
 

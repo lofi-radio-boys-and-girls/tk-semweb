@@ -15,12 +15,16 @@
   <div class="page-heading">
   {% if keyword == 'Don\'t Know Where to Start? Try Checking These Songs Out!' %}
     <h3>{{keyword}}</h3>
-  {% else %}
+  {% elif not message %}
     <h3>Result for {{keyword}}</h3>
   {% endif %}
   </div>
   <div class="page-content">
     <div class="container">
+      {% if message %}
+
+        <h3 class="align-middle mb-4">{{ message }}</h3>
+      {% else %}
       {% for song, artist in songs_and_artists %}
         <a href="detail?artist={{artist}}&song={{song}}" class="btn btn-primary rounded-pill btn-block m-2">
           <div class="container d-flex justify-content-between text-center">
@@ -31,6 +35,7 @@
           </div>
         </a>
       {% endfor %}
+      {% endif %}
     </div>
 
   </div>
