@@ -29,13 +29,22 @@ def detail(request):
     local_store = check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))
     # print(local_store['chord_labels'][0].replace('_',','))
     context = {
-        'data' : get_song_detail(request.GET['song'],request.GET['artist']),
-        'artist': request.GET['artist'].replace('_ ', ', '),
-        'attr' : local_store,
-        'chord': local_store['chord_labels'][0].replace('_',',')
-    }
+            # 'data' : get_song_detail(request.GET['song'],request.GET['artist']),
+            'artist': request.GET['artist'].replace('_ ', ', '),
+            'attr' : local_store,
+        }
+    if len(local_store['chord_labels']) != 0:
+        context['chord'] = local_store['chord_labels'][0].replace('_',',')
+    if len(local_store['comments']) != 0:
+        context['comment'] = local_store['comments'][0]
+    if len(local_store['album_labels']) != 0:
+        context['album_labels'] = local_store['album_labels'][0].replace('_',',')
+    if len(local_store['writer_labels']) != 0:
+        context['writer_labels'] = local_store['writer_labels'][0].replace('_',',')
+    if len(local_store['producer_labels']) != 0:
+        context['producer_labels'] = local_store['producer_labels'][0].replace('_',',')
     # print(request.GET['artist'].replace('_ ', '|'))
-    # print(context['data'],context['attr'])
+    print(context['attr'])
     return render(request, 'detailSong.html', context)
 
 

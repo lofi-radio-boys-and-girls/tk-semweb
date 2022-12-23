@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 127,
+            "activePatchIndex": 134,
             "patches": [
                 {
                     "date": 1671721438029,
@@ -516,6 +516,34 @@
                 {
                     "date": 1671752994991,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n                             <td>\r\n                                 Chord\r\n                             </td>\r\n                             <td>\r\n-                                {{attr.chord_labels.0}}\r\n+                                {{chord}}\r\n                             </td>\r\n                         </tr>\r\n                         <tr>\r\n                             <td>\r\n"
+                },
+                {
+                    "date": 1671754487424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n         </div>\r\n         <div class=\"row\">\r\n             <div class=\"col-md-12\">\r\n                 <p>\r\n-                    {{data.comments.0}}\r\n+                    {{attr.comments.0}}\r\n                 </p>\r\n             </div>\r\n         </div>\r\n         <div class=\"row\">\r\n"
+                },
+                {
+                    "date": 1671754708639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Producer</strong>:\r\n+                        <strong>Producer</strong>: {{}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Writer</strong>: {{data.writer_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671754714931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n             </div>\r\n             <div class=\"col-md-4\">\r\n                 <ul>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Producer</strong>: {{}}\r\n+                        <strong>Producer</strong>: {{producer_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Writer</strong>: {{data.writer_labels.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671754721945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Producer</strong>: {{producer_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Writer</strong>: {{data.writer_labels.0}}\r\n+                        <strong>Writer</strong>: {{writer_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Genre</strong>: {{attr.genres.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671754752708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Artist</strong>: {{artist}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Album</strong>: {{data.album_labels.0}}\r\n+                        <strong>Album</strong>: {{album_labels.0}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Highest Charting Position</strong>: {{attr.charting_positions.0}}\r\n                     </li>\r\n@@ -34,9 +34,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Producer</strong>: {{producer_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Writer</strong>: {{writer_labels.0}}\r\n+                        <strong>Writer</strong>: {{writer_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Genre</strong>: {{attr.genres.0}}\r\n                     </li>\r\n"
+                },
+                {
+                    "date": 1671755066569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n                     <li class=\"list-item\">\r\n                         <strong>Artist</strong>: {{artist}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n-                        <strong>Album</strong>: {{album_labels.0}}\r\n+                        <strong>Album</strong>: {{album_labels}}\r\n                     </li>\r\n                     <li class=\"list-item\">\r\n                         <strong>Highest Charting Position</strong>: {{attr.charting_positions.0}}\r\n                     </li>\r\n@@ -48,9 +48,9 @@\n         </div>\r\n         <div class=\"row\">\r\n             <div class=\"col-md-12\">\r\n                 <p>\r\n-                    {{attr.comments.0}}\r\n+                    {{attr.comment}}\r\n                 </p>\r\n             </div>\r\n         </div>\r\n         <div class=\"row\">\r\n"
+                },
+                {
+                    "date": 1671755071916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n         </div>\r\n         <div class=\"row\">\r\n             <div class=\"col-md-12\">\r\n                 <p>\r\n-                    {{attr.comment}}\r\n+                    {{comment}}\r\n                 </p>\r\n             </div>\r\n         </div>\r\n         <div class=\"row\">\r\n"
                 }
             ],
             "date": 1671721438029,
