@@ -128,7 +128,6 @@ def get_song_detail(songLabel, artistLabel):
         }
         GROUP BY ?songLabel ?comment
         """ % (songLabel, songLabel, artistLabel, artistLabel)
-    print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()["results"]["bindings"]
