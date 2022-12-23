@@ -26,13 +26,16 @@ def search(request):
 
 
 def detail(request):
+    local_store = check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))
+    # print(local_store['chord_labels'][0].replace('_',','))
     context = {
         'data' : get_song_detail(request.GET['song'],request.GET['artist']),
         'artist': request.GET['artist'].replace('_ ', ', '),
-        'attr' : check_local_store(request.GET['song'],request.GET['artist'].replace('_ ', '|'))
+        'attr' : local_store,
+        'chord': local_store['chord_labels'][0].replace('_',',')
     }
     # print(request.GET['artist'].replace('_ ', '|'))
-    print(context['data'],context['attr'])
+    # print(context['data'],context['attr'])
     return render(request, 'detailSong.html', context)
 
 
